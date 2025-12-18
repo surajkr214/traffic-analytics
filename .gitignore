@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+venv/
+env/
+*.db
+traffic_master_v7.db
+traffic_log.csv
+*.mp4
+*.avi
+.vscode/
+.idea/
