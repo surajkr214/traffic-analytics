@@ -54,7 +54,7 @@ Designed for scalability, this solution supports multiple input streams (Uploads
 
 ### **1. Clone the Repository**
 ```bash
-git clone [https://github.com/YOUR_USERNAME/traffic_analytics.git](https://github.com/YOUR_USERNAME/traffic_analytics.git)
+git clone [https://github.com/surajkr214/traffic_analytics.git](https://github.com/surajkr214/traffic_analytics.git)
 cd traffic_analytics
 
 ## 📂 Project Structure
