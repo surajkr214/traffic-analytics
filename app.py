@@ -208,7 +208,7 @@ with app_tab:
     stop_btn = st.button("⏹️ STOP")
 
     if run_btn and video_path is not None:
-        cap = cv2.VideoCapture(video_path)
+        cap = cv2.VideoCapture(video_path, cv2.CAP_FFMPEG)
         frame_id = 0
         
         while cap.isOpened():
