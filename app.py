@@ -11,6 +11,12 @@ import time
 import os
 import yt_dlp 
 
+
+# --- CRITICAL FIX FOR STREAMLIT CLOUD / OPENCV ---
+# These specific settings prevent the "CAP_IMAGES" backend
+os.environ["OPENCV_VIDEOIO_PRIORITY_CV_IMAGES"] = "0"
+os.environ["OPENCV_VIDEOIO_PRIORITY_IMAGES"] = "0"
+
 # ==========================================
 # 1. PAGE CONFIGURATION
 # ==========================================
@@ -208,7 +214,7 @@ with app_tab:
     stop_btn = st.button("⏹️ STOP")
 
     if run_btn and video_path is not None:
-        cap = cv2.VideoCapture(video_path, cv2.CAP_FFMPEG)
+        cap = cv2.VideoCapture(video_path)
         frame_id = 0
         
         while cap.isOpened():
