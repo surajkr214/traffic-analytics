@@ -4,5 +4,5 @@ opencv-python-headless
 pandas
 numpy
 plotly
-yt-dlp
+yt-dlp>=2023.7.6
 watchdog

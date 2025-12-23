@@ -14,7 +14,7 @@ ALERT_THRESHOLD = 20  # Alert if more than 20 vehicles detected
 
 # Load the VisDrone Trained Model
 print("Loading AI Model... please wait.")
-model = YOLO('model.pt') 
+model = YOLO('C:\\Users\\suraj\\OneDrive - University of East London\\CN-5021-DS\\Projects\\traffic-analytics\\model.pt') 
 
 # Initialize Video Capture
 cap = cv2.VideoCapture(VIDEO_SOURCE)
