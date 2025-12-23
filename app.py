@@ -98,9 +98,12 @@ def log_to_db(data_list):
 @st.cache_resource
 def get_youtube_stream_url(youtube_url):
     ydl_opts = {
-        'format': 'best[ext=mp4]/best',
+        # Force a single file (mp4) with max height 720p. 
+        # This prevents OpenCV from getting complex DASH streams it can't play.
+        'format': 'best[ext=mp4][height<=720]/best[ext=mp4]/best', 
         'quiet': True,
         'no_warnings': True,
+        'force_generic_extractor': False,
     }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
