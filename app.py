@@ -103,21 +103,39 @@ def log_to_db(data_list):
 
 @st.cache_resource
 @st.cache_resource
+@st.cache_resource
 def get_youtube_stream_url(youtube_url):
-    ydl_opts = {
-        # 1. Force a single file (progressive) - OpenCV cannot handle separate video/audio streams
-        # 2. Limit to 720p (YouTube doesn't provide single-file 1080p usually)
-        'format': 'best[ext=mp4][height<=720]/best[ext=mp4]/best',
-        'noplaylist': True,
-        'quiet': True,
-        'no_warnings': True,
-    }
+    # First pass: Get video info to check if it's live
+    try:
+        with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(youtube_url, download=False)
+            is_live = info.get('is_live', False)
+    except Exception:
+        is_live = False
+
+    # Define options based on live status
+    if is_live:
+        # For LIVE: Use HLS (m3u8) which is required for continuous streams
+        ydl_opts = {
+            'format': 'best[ext=mp4]',
+            'quiet': True,
+            'no_warnings': True
+        }
+    else:
+        # For RECORDED: Force a direct HTTP progressive MP4
+        # This fixes the "segment loading" error for standard videos
+        ydl_opts = {
+            'format': 'best[ext=mp4][protocol^=http]',
+            'quiet': True,
+            'no_warnings': True,
+            'geo_bypass': True
+        }
+
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(youtube_url, download=False)
             return info['url']
     except Exception as e:
-        # DISPLAY THE ERROR ON SCREEN
         st.error(f"YouTube Error: {str(e)}")
         return None
 
